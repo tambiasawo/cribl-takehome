@@ -1,13 +1,7 @@
 import React, { useState } from "react";
+import styles from "./LogTable.module.css";
 
-const LogTable = ({
-  events,
-}: {
-  events: any[];
-  loading: boolean;
-  error: string | null;
-  done: boolean;
-}) => {
+const LogTable = ({ events }: { events: any[] }) => {
   const [expanded, setExpanded] = useState<Set<number>>(new Set());
 
   const handleToggle = React.useCallback((index: number) => {
@@ -41,18 +35,22 @@ const LogTable = ({
           return (
             <React.Fragment key={idx}>
               <tr
-                className={isOpen ? "row-expanded" : "row-collapsed"}
+                className={isOpen ? styles.rowExpanded : undefined}
                 onClick={() => handleToggle(idx)}
               >
-                <td className="time-cell">{time}</td>
-                <td className="event-cell">
-                  <code className="event-single-line">{singleLineEvent}</code>
+                <td className={styles.timeCell}>{time}</td>
+                <td className={styles.eventCell}>
+                  <code className={styles.eventSingleLine}>
+                    {singleLineEvent}
+                  </code>
                 </td>
               </tr>
               {isOpen && (
-                <tr className="row-details">
+                <tr className={styles.rowDetails}>
                   <td colSpan={2}>
-                    <pre className="event-multi-line">{multiLineEvent}</pre>
+                    <pre className={styles.eventMultiLine}>
+                      {multiLineEvent}
+                    </pre>
                   </td>
                 </tr>
               )}
