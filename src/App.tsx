@@ -13,18 +13,36 @@ function App() {
         <h1>Take-Home Log Viewer</h1>
 
         <div className={styles.appStatus}>
-          {error && <span className={styles.statusBadgeError}>Error</span>}
+          {error && (
+            <span
+              className={`${styles.statusBadge} ${styles.statusBadgeError}`}
+            >
+              Error
+            </span>
+          )}
           {!error && isLoading && !isDone && (
-            <span className={styles.statusBadgeLoading}>Streaming...</span>
+            <span
+              className={`${styles.statusBadge} ${styles.statusBadgeLoading}`}
+            >
+              Streaming…
+            </span>
           )}
           {!error && !isLoading && isDone && (
-            <span className={styles.statusBadgeDone}>Finished</span>
+            <span className={`${styles.statusBadge} ${styles.statusBadgeDone}`}>
+              Finished
+            </span>
           )}
         </div>
       </header>
 
+      {isLoading && events.length === 0 && !error && (
+        <div className={styles.appMessage}>
+          Streaming logs… this may take a moment.
+        </div>
+      )}
+
       {error && (
-        <div className={styles.appMessageError}>
+        <div className={`${styles.appMessage} ${styles.appMessageError}`}>
           Failed to load logs: {error}
         </div>
       )}
