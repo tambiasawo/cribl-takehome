@@ -1,0 +1,92 @@
+.logTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-size: 12px;
+  background: #f5f6fa; /* light background */
+}
+
+.logTable thead {
+  background: #e4e8f0; /* light grey header */
+}
+
+.logTable th {
+  text-align: left;
+  padding: 6px 8px;
+  border-bottom: 1px solid #c7cfdd;
+  font-weight: 500;
+  color: #333952;
+}
+
+.logTable th:first-child {
+  width: 220px; /* time column */
+}
+
+.logTable tbody tr {
+  cursor: pointer;
+}
+
+.logTable tbody tr:nth-child(odd) {
+  background: #ffffff;
+}
+
+.logTable tbody tr:nth-child(even) {
+  background: #f3f4f8;
+}
+
+.logTable tbody tr:hover {
+  background: #e3ecff;
+}
+
+.timeCell {
+  padding: 4px 8px;
+  white-space: nowrap;
+  color: #50576a;
+  font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+/* expand/collapse arrow */
+.timeCell::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 6px;
+  font-size: 10px;
+  vertical-align: middle;
+  color: #8a8fa0;
+  transition: transform 0.1s ease-out;
+}
+
+.rowExpanded .timeCell::before {
+  transform: rotate(90deg);
+}
+
+.eventCell {
+  padding: 4px 8px;
+}
+
+/* single-line JSON in the row */
+.eventSingleLine {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  color: #50576a;
+}
+
+/* expanded row with pretty JSON */
+.rowDetails td {
+  padding: 6px 8px;
+  background: #ffffff;
+  border-top: 1px solid #d4d9e5;
+}
+
+.eventMultiLine {
+  margin: 0;
+  white-space: pre;
+  font-size: 12px;
+  line-height: 1.4;
+  font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  color: #c53030;
+}
