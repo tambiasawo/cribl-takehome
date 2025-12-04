@@ -1,0 +1,23 @@
+/* src/components/Timeline.module.css */
+
+.timeline {
+  display: flex;
+  align-items: flex-end;
+  height: 50px;
+  gap: 3px;
+  margin-bottom: 12px;
+  padding: 4px 0;
+  border-bottom: 1px solid #e3e6ee; /* subtle baseline */
+}
+
+.bucket {
+  flex: 1;
+  min-width: 4px; /* makes bars visually wider */
+  background: #4dabf7;
+  border-radius: 2px 2px 0 0;
+  transition: background 0.1s ease-out, height 0.1s ease-out;
+}
+
+.bucket:hover {
+  background: #228be6;
+}
