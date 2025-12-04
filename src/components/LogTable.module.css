@@ -1,3 +1,7 @@
+.tableContainer {
+  height: calc(100vh - 80px);
+  overflow: auto;
+}
 .logTable {
   width: 100%;
   border-collapse: collapse;
