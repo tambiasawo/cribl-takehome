@@ -17,7 +17,7 @@ const LogTable = ({ events }: { events: any[] }) => {
   }, []);
 
   return (
-    <table className="log-table">
+    <table className={styles.logTable}>
       <thead>
         <tr>
           <th>Timestamp</th>
