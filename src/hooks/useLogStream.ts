@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { parseNDJson } from "../utils/parseNDJson";
 
 const useLogStream = (url: string) => {
   const [events, setEvents] = useState<any[]>([]);
@@ -6,7 +7,7 @@ const useLogStream = (url: string) => {
   const [isDone, setIsDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchLogs = React.useCallback(async () => {
+  const fetchLogs = React.useCallback(async (url: string) => {
     try {
       setIsLoading(true);
       setIsDone(false);
@@ -27,34 +28,19 @@ const useLogStream = (url: string) => {
         if (done) break;
 
         buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split("\n");
-        buffer = lines.pop() || "";
+        const { events, rest } = parseNDJson(buffer);
+        buffer = rest;
 
-        for (const line of lines) {
-          const trimmedLine = line.trim();
-          if (!trimmedLine) continue;
-
-          try {
-            const event = JSON.parse(trimmedLine);
-            setEvents((prev) => [...prev, event]);
-          } catch (err) {
-            console.warn("Failed to parse log line", { trimmedLine, err });
-          }
+        if (events.length > 0) {
+          setEvents((prev) => [...prev, ...events]);
         }
       }
 
-      const trimmedLastLine = buffer.trim();
-      if (trimmedLastLine) {
-        try {
-          const lastEvent = JSON.parse(trimmedLastLine);
-          setEvents((prev) => [...prev, lastEvent]);
-        } catch (err) {
-          console.warn("Failed to parse last log line", {
-            trimmedLastLine,
-            err,
-          });
-        }
+      const { events: lastEvents } = parseNDJson(buffer + "\n");
+      if (lastEvents.length > 0) {
+        setEvents((prev) => [...prev, ...lastEvents]);
       }
+
       setIsDone(true);
     } catch (error) {
       setError(
@@ -66,8 +52,8 @@ const useLogStream = (url: string) => {
   }, []);
 
   React.useEffect(() => {
-    fetchLogs();
-  }, [fetchLogs]);
+    fetchLogs(url);
+  }, [fetchLogs, url]);
   return { events, isLoading, error, isDone };
 };
 
