@@ -1,5 +1,6 @@
 import useLogStream from "./hooks/useLogStream";
 import LogTable from "./components/LogTable";
+import Timeline from "./components/Timeline";
 import styles from "./App.module.css";
 
 const URL = "https://s3.amazonaws.com/io.cribl.c021.takehome/cribl.log";
@@ -46,6 +47,7 @@ function App() {
           Failed to load logs: {error}
         </div>
       )}
+      {!error && events.length > 0 && <Timeline events={events} />}
 
       {!error && (events.length > 0 || isLoading) && (
         <LogTable events={events} />
