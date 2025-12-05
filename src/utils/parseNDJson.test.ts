@@ -26,4 +26,12 @@ describe("parseNDJSON", () => {
     expect(events.length).toBe(1);
     expect(events[0]).toEqual({ _time: 1724323612592, message: "first" });
   });
+
+  it("ignores empty lines", () => {
+    const input = '\n{"_time":1,"message":"only"}\n\n';
+    const { events, rest } = parseNDJson(input);
+    expect(events.length).toBe(1);
+    expect(events[0]).toEqual({ _time: 1, message: "only" });
+    expect(rest).toBe("");
+  });
 });
