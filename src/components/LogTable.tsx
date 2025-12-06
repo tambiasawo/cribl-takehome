@@ -19,7 +19,7 @@ const LogTable = ({ events }: { events: any[] }) => {
   return (
     <div className={styles.tableContainer}>
       <table className={styles.logTable}>
-        <thead>
+        <thead className={styles.tableHeader }>
           <tr>
             <th>Timestamp</th>
             <th>Event</th>

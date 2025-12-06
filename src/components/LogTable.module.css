@@ -12,6 +12,9 @@
 }
 
 .logTable thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   background: #e4e8f0; /* light grey header */
 }
 
