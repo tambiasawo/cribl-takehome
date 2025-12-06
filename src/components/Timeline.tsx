@@ -19,10 +19,9 @@ function buildBuckets(events: any[]): Bucket[] {
   const minTime = Math.min(...times);
   const maxTime = Math.max(...times);
   const span = Math.max(1, maxTime - minTime);
-  console.log({ minTime, maxTime, span });
-  const bucketMs = 5 * 60 * 1000;
+
+  const bucketMs = 60 * 60 * 1000;
   const bucketCount = Math.max(1, Math.ceil(span / bucketMs));
-  console.log({ span, bucketMs, bucketCount });
 
   const buckets: Bucket[] = Array.from({ length: bucketCount }, (_, i) => ({
     start: minTime + i * bucketMs,
@@ -37,10 +36,6 @@ function buildBuckets(events: any[]): Bucket[] {
     const index = Math.min(Math.max(rawIndex, 0), buckets.length - 1);
     buckets[index].count++;
   }
-  console.log(
-    "bucket counts sample:",
-    buckets.slice(0, 20).map((b) => b.count)
-  );
   return buckets;
 }
 
@@ -49,7 +44,7 @@ const Timeline: React.FC<TimelineProps> = ({ events }) => {
   if (buckets.length === 0) return null;
 
   const maxCount = Math.max(...buckets.map((b) => b.count)) || 1;
-  console.log("maxCount:", maxCount);
+
   return (
     <div className={styles.timeline}>
       {buckets.map((b) => {
